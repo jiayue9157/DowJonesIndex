@@ -1,0 +1,95 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<div>Welcome to Dow Jones Index App!</div>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/uploadFile">
+        File to upload:<input type="file" name="file" /><input type="submit" value="Upload" />
+    </form>
+</div>
+
+<div>
+    <ul>
+        <li th:each="file : ${files}">
+            <a th:href="${file}" th:text="${file}" />
+        </li>
+    </ul>
+</div>
+
+<div>
+    <form action="#" th:action="@{/add}" th:object="${newStock}" method="post">
+        Insert New Record
+        <table>
+            <tr>
+                <td>Quarter</td>
+                <td><input type="text" th:field="*{quarter}" /></td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td><input type="text" th:field="*{stock}" /></td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td><input type="text" th:field="*{date}" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="Insert" /> <input type="reset" value="Reset" />
+    </form>
+</div>
+
+<div>
+    <form action="#" th:action="@{/filter}" method="post">
+        Search Stock: <input type="text" th:value="${stock}" name="stock"/> <input type="submit" value="Filter" />
+    </form>
+</div>
+
+<div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Quarter</th>
+            <th>Stock</th>
+            <th>Date</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>%~Price</th>
+            <th>%~VolumeOverLastWeek</th>
+            <th>PreviousWeeksVolume</th>
+            <th>NextWeeksOpen</th>
+            <th>NextWeeksClose</th>
+            <th>%~NextWeeksPrice</th>
+            <th>DaysToNextDividend</th>
+            <th>PercentReturnNextDividend</th>
+        </tr>
+        <tr th:each="record : ${records}">
+            <td th:text="${record.getId()}"/>
+            <td th:text="${record.getQuarter()}"/>
+            <td th:text="${record.getStock()}"/>
+            <td th:text="${record.getDate()}"/>
+            <td th:text="${record.getOpen()}"/>
+            <td th:text="${record.getHigh()}"/>
+            <td th:text="${record.getLow()}"/>
+            <td th:text="${record.getClose()}"/>
+            <td th:text="${record.getVolume()}"/>
+            <td th:text="${record.getPercentChangePrice()}"/>
+            <td th:text="${record.getPercentChangeVolumeOverLastWeek()}"/>
+            <td th:text="${record.getPreviousWeeksVolume()}"/>
+            <td th:text="${record.getNextWeeksOpen()}"/>
+            <td th:text="${record.getNextWeeksClose()}"/>
+            <td th:text="${record.getPercentChangeNextWeeksPrice()}"/>
+            <td th:text="${record.getDaysToNextDividend()}"/>
+            <td th:text="${record.getPercentReturnNextDividend()}"/>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>
